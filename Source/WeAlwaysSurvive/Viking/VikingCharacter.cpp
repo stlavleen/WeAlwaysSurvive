@@ -6,7 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include <WeAlwaysSurvive/RPGPlayerController.h>
-#include <EnhancedInputSubsystems.h>
+#include "EnhancedInputSubsystems.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AVikingCharacter::AVikingCharacter()
@@ -23,6 +24,7 @@ AVikingCharacter::AVikingCharacter()
 	Camera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 
 	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 // Called when the game starts or when spawned
