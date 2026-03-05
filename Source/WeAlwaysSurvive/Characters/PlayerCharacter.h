@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "VikingCharacter.generated.h"
+#include "PlayerCharacter.generated.h"
 
 UCLASS()
-class WEALWAYSSURVIVE_API AVikingCharacter : public ACharacter
+class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AVikingCharacter();
+	APlayerCharacter();
 
 protected:
 	// Called when the game starts or when spawned
