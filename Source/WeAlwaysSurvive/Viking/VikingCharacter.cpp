@@ -5,11 +5,14 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include <WeAlwaysSurvive/RPGPlayerController.h>
+#include <EnhancedInputSubsystems.h>
 
 // Sets default values
 AVikingCharacter::AVikingCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	
 	PrimaryActorTick.bCanEverTick = true;
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
@@ -24,7 +27,6 @@ AVikingCharacter::AVikingCharacter()
 void AVikingCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -38,6 +40,5 @@ void AVikingCharacter::Tick(float DeltaTime)
 void AVikingCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
