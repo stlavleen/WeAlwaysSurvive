@@ -21,6 +21,8 @@ AVikingCharacter::AVikingCharacter()
 	
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+
+	bUseControllerRotationYaw = false;
 }
 
 // Called when the game starts or when spawned
