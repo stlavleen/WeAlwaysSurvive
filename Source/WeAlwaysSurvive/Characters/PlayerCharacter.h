@@ -6,6 +6,10 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+enum class EPlayerCharacterState : uint8;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCharacterStateChanged, EPlayerCharacterState, NewState);
+
 UCLASS()
 class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter
 {
@@ -32,4 +36,21 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
 	class UCameraComponent* Camera;
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hints")
+	EPlayerCharacterState State;
+
+	UPROPERTY(BlueprintAssignable);
+	FOnCharacterStateChanged OnStateChangedEvent;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void Run();
+
+	UFUNCTION(BlueprintCallable)
+	void Walk();
+
+	UFUNCTION(BlueprintCallable)
+	void StopMovement();
 };

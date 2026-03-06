@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "../Enums/PlayerCharacterState.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -23,6 +24,8 @@ APlayerCharacter::APlayerCharacter()
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	State = EPlayerCharacterState::Idle;
 }
 
 // Called when the game starts or when spawned
@@ -36,7 +39,6 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -45,4 +47,23 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
+void APlayerCharacter::Run() 
+{
+	State = EPlayerCharacterState::Running;
+	OnStateChangedEvent.Broadcast(State);
+}
+
+void APlayerCharacter::Walk()
+{
+	State = EPlayerCharacterState::Walking;
+	OnStateChangedEvent.Broadcast(State);
+}
+
+void APlayerCharacter::StopMovement()
+{
+	State = EPlayerCharacterState::Idle;
+	OnStateChangedEvent.Broadcast(State);
+}
+
 
