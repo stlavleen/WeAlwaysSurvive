@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "EnemyAIController.generated.h"
 
+struct FAIStimulus;
+
 /**
  * 
  */
@@ -15,9 +17,14 @@ class WEALWAYSSURVIVE_API AEnemyAIController : public AAIController
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy AI")
-	UBehaviorTree* BehaviorTree;
-	
+	AEnemyAIController();
+
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy AI")
+	UBehaviorTree* BehaviorTree;
+
 	virtual void OnPossess(APawn* InPawn) override;
+
+private:
+	void OnTargetPerceptionUpdated(AActor* actor, FAIStimulus stimulus);
 };
