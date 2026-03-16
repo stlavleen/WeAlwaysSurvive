@@ -7,6 +7,8 @@
 #include "EnemyAIController.generated.h"
 
 struct FAIStimulus;
+struct FActorPerceptionUpdateInfo;
+class UBehaviorTree;
 
 /**
  * 
@@ -26,5 +28,6 @@ protected:
 	virtual void OnPossess(APawn* InPawn) override;
 
 private:
-	void OnTargetPerceptionUpdated(AActor* actor, FAIStimulus stimulus);
+	UFUNCTION()
+	void OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus);
 };

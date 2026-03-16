@@ -4,7 +4,6 @@
 #include "EnemyAIController.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
-#include "Perception/AIPerceptionTypes.h"
 
 AEnemyAIController::AEnemyAIController()
 {
@@ -13,11 +12,13 @@ AEnemyAIController::AEnemyAIController()
 	senseConfig->LoseSightRadius = 2700;
 	senseConfig->PeripheralVisionAngleDegrees = 90;
 	senseConfig->DetectionByAffiliation.bDetectEnemies = true;
+	senseConfig->DetectionByAffiliation.bDetectNeutrals = true;
+	senseConfig->DetectionByAffiliation.bDetectFriendlies = true;
 
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception"));
 	PerceptionComponent->ConfigureSense(*senseConfig);
 	PerceptionComponent->SetDominantSense(senseConfig->GetSenseImplementation());
-	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::OnTargetPerceptionUpdated);
+	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::OnTargetPerceptionUpdate);
 }
 
 void AEnemyAIController::OnPossess(APawn* InPawn)
@@ -28,8 +29,10 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 		RunBehaviorTree(BehaviorTree);
 }
 
-void AEnemyAIController::OnTargetPerceptionUpdated(AActor* actor, FAIStimulus stimulus)
+void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Cyan, "OnTargetPerceptionUpdate is called");
+
 	const auto senseID = UAISense::GetSenseID<UAISense_Sight>();
 
 	if (senseID == stimulus.Type && stimulus.WasSuccessfullySensed())
