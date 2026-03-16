@@ -31,8 +31,6 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Cyan, "OnTargetPerceptionUpdate is called");
-
 	const auto senseID = UAISense::GetSenseID<UAISense_Sight>();
 
 	if (senseID == stimulus.Type && stimulus.WasSuccessfullySensed())
