@@ -7,8 +7,6 @@
 #include "EnemyAIController.generated.h"
 
 struct FAIStimulus;
-struct FActorPerceptionUpdateInfo;
-class UBehaviorTree;
 
 /**
  * 
