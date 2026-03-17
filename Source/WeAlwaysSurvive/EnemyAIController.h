@@ -23,9 +23,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE AEnemyCharacter* GetEnemyCharacter() const;
 
-	UFUNCTION(BlueprintCallable)
-	void Attack() const;
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy AI")
 	UBehaviorTree* BehaviorTree;

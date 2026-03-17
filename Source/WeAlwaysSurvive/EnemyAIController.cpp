@@ -29,11 +29,6 @@ AEnemyCharacter* AEnemyAIController::GetEnemyCharacter() const
 	return Cast<AEnemyCharacter>(GetCharacter());
 }
 
-void AEnemyAIController::Attack() const
-{
-	GetEnemyCharacter()->PlayAttackAnimMontage();
-}
-
 void AEnemyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
