@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy AI")
 	UBehaviorTree* BehaviorTree;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Enemy AI")
+	FName PlayerActorKeyName = "PlayerActor";
+
 	virtual void OnPossess(APawn* InPawn) override;
 
 private:

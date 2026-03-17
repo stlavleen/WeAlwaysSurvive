@@ -4,6 +4,8 @@
 #include "EnemyAIController.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "Characters/PlayerCharacter.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 AEnemyAIController::AEnemyAIController()
 {
@@ -32,10 +34,14 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus)
 {
 	const auto senseID = UAISense::GetSenseID<UAISense_Sight>();
+	auto playerCharacter = Cast<APlayerCharacter>(actor);
 
-	if (senseID == stimulus.Type && stimulus.WasSuccessfullySensed())
+	if (senseID == stimulus.Type && stimulus.WasSuccessfullySensed() && playerCharacter != nullptr)
 	{
-		actor->Tags.Init({}, 1);
-		actor->Tags[0] = "Spotted";
+		/*actor->Tags.Init({}, 1);
+		actor->Tags[0] = "Spotted";*/
+
+		auto blackboardComp = GetBlackboardComponent();
+		blackboardComp->SetValueAsObject(PlayerActorKeyName, playerCharacter);
 	}
 }
