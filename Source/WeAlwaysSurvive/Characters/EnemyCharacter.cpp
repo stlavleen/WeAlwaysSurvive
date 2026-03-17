@@ -32,3 +32,8 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+void AEnemyCharacter::PlayAttackAnimMontage()
+{
+	PlayAnimMontage(AttackAnimMontage, 1.0f, "Default");
+}
+

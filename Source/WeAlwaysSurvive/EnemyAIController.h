@@ -7,6 +7,7 @@
 #include "EnemyAIController.generated.h"
 
 struct FAIStimulus;
+class AEnemyCharacter;
 
 /**
  * 
@@ -18,6 +19,12 @@ class WEALWAYSSURVIVE_API AEnemyAIController : public AAIController
 
 public:
 	AEnemyAIController();
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE AEnemyCharacter* GetEnemyCharacter() const;
+
+	UFUNCTION(BlueprintCallable)
+	void Attack() const;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy AI")

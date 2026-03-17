@@ -11,6 +11,10 @@ class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* AttackAnimMontage;
+
 public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
@@ -26,4 +30,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
+	void PlayAttackAnimMontage();
 };
