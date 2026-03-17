@@ -38,9 +38,6 @@ void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus sti
 
 	if (senseID == stimulus.Type && stimulus.WasSuccessfullySensed() && playerCharacter != nullptr)
 	{
-		/*actor->Tags.Init({}, 1);
-		actor->Tags[0] = "Spotted";*/
-
 		auto blackboardComp = GetBlackboardComponent();
 		blackboardComp->SetValueAsObject(PlayerActorKeyName, playerCharacter);
 	}
