@@ -7,7 +7,7 @@
 #include "Characters/PlayerCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
-AEnemyAIController::AEnemyAIController()
+AEnemyAIController::AEnemyAIController() : BehaviorTree(nullptr)
 {
 	auto senseConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SenseConfig_Sight"));
 	senseConfig->SightRadius = 2000;
