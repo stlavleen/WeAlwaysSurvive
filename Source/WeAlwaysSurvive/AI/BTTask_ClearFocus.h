@@ -4,19 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "BTTask_SetFocus.generated.h"
+#include "BTTask_ClearFocus.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class WEALWAYSSURVIVE_API UBTTask_SetFocus : public UBTTaskNode
+class WEALWAYSSURVIVE_API UBTTask_ClearFocus : public UBTTaskNode
 {
 	GENERATED_BODY()
-	
-public:
-	UPROPERTY(EditAnywhere, Category = "Blackboard")
-	FBlackboardKeySelector TargetKey;
 
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
