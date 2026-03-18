@@ -39,12 +39,14 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, "OnTargetPerceptionUpdate is called");
 	const auto senseID = UAISense::GetSenseID<UAISense_Sight>();
 	auto playerCharacter = Cast<APlayerCharacter>(actor);
 
-	if (senseID == stimulus.Type && stimulus.WasSuccessfullySensed() && playerCharacter != nullptr)
+	if (senseID == stimulus.Type)
 	{
 		auto blackboardComp = GetBlackboardComponent();
-		blackboardComp->SetValueAsObject(PlayerActorKeyName, playerCharacter);
+		auto value = stimulus.WasSuccessfullySensed() && playerCharacter != nullptr ? playerCharacter : nullptr;
+		blackboardComp->SetValueAsObject(PlayerActorKeyName, value);
 	}
 }
