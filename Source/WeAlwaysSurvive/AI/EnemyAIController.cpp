@@ -4,8 +4,8 @@
 #include "EnemyAIController.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
-#include "Characters/PlayerCharacter.h"
-#include "Characters/EnemyCharacter.h"
+#include "WeAlwaysSurvive/Characters/PlayerCharacter.h"
+#include "WeAlwaysSurvive/Characters/EnemyCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 AEnemyAIController::AEnemyAIController() : BehaviorTree(nullptr)
