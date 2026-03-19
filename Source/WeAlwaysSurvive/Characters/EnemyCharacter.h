@@ -4,12 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "WeAlwaysSurvive/Structs/EnemyStats.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
 class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FEnemyStats Stats;
 
 public:
 	// Sets default values for this character's properties
