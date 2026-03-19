@@ -7,8 +7,6 @@
 #include "WeAlwaysSurvive/Structs/PlayerStats.h"
 #include "PlayerCharacter.generated.h"
 
-enum class EPlayerCharacterState : uint8;
-
 UCLASS()
 class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter
 {
