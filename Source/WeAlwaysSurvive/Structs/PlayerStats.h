@@ -14,16 +14,17 @@ struct WEALWAYSSURVIVE_API FPlayerStats
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Health;
+	int32 Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Stamina;
+	int32 Stamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Experience;
+	int32 Experience;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Level;
 
 	FPlayerStats();
+	FPlayerStats(int32 health, int32 stamina, int32 experience, int32 level);
 };

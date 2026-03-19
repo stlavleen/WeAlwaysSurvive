@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FPlayerStats Stats;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FPlayerStats StatsMax;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
 	class USpringArmComponent* CameraBoom;

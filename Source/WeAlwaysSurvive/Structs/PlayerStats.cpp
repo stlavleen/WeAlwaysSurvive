@@ -4,6 +4,11 @@
 #include "PlayerStats.h"
 
 FPlayerStats::FPlayerStats() 
-	: Health(0), Stamina(0), Experience(0), Level(0)
+	: FPlayerStats(0, 0, 0, 0)
+{
+}
+
+FPlayerStats::FPlayerStats(int32 health, int32 stamina, int32 experience, int32 level)
+	: Health(health), Stamina(stamina), Experience(experience), Level(level)
 {
 }
