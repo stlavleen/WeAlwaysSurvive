@@ -21,6 +21,8 @@ APlayerCharacter::APlayerCharacter() : StatsMax(100, 100, 100, 85)
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	OnTakeAnyDamage.AddDynamic(this, &APlayerCharacter::TakeAnyDamage);
 }
 
 // Called when the game starts or when spawned
@@ -39,6 +41,11 @@ void APlayerCharacter::Tick(float DeltaTime)
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void APlayerCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
+{
+	Stats.Health = FMath::Clamp(Stats.Health - StaticCast<int32>(damage), 0, StatsMax.Health);
 }
 
 

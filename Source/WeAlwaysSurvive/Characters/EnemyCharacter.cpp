@@ -2,6 +2,7 @@
 
 
 #include "EnemyCharacter.h"
+#include "Engine/DamageEvents.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -30,5 +31,11 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AEnemyCharacter::Attack(AActor* actor, int32 damage)
+{
+	const auto damageEvent = FDamageEvent();
+	actor->TakeDamage(damage, damageEvent, nullptr, nullptr);
 }
 
