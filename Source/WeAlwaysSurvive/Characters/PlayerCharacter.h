@@ -13,10 +13,10 @@ class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FPlayerStats Stats;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FPlayerStats StatsMax;
 
 protected:

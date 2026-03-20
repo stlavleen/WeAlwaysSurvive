@@ -13,7 +13,7 @@ class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FEnemyStats Stats;
 
 public:
