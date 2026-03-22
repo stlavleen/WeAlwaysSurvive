@@ -7,8 +7,19 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
-APlayerCharacter::APlayerCharacter() : StatsMax(100, 100, 100, 85)
+APlayerCharacter::APlayerCharacter()
 {
+	Health = 100;
+	Stamina = 100;
+	Experience = 0;
+	Level = 1;
+	AttacksDamage = {};
+	MaxHealth = 100;
+	MaxStamina = 100;
+	MaxExperience = 100;
+	MaxLevel = 85;
+	AttacksMaxDamage = {};
+	
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -45,7 +56,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
 {
-	Stats.Health = FMath::Clamp(Stats.Health - StaticCast<int32>(damage), 0, StatsMax.Health);
+	Health = FMath::Clamp(Health - StaticCast<int32>(damage), 0, MaxHealth);
 }
 
 

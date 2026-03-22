@@ -22,12 +22,5 @@ bool UAnimNotify_EnemyAttack::Attack(USkeletalMeshComponent* meshComp, int32 att
 	if (focusActor == nullptr)
 		return false;
 
-	const auto& attacksDamage = enemyCharacter->Stats.AttacksDamage;
-
-	if (!attacksDamage.IsValidIndex(attackIndex))
-		return false;
-
-	enemyCharacter->Attack(focusActor, attacksDamage[attackIndex]);
-
-	return true;
+	return enemyCharacter->Attack(focusActor, attackIndex);
 }

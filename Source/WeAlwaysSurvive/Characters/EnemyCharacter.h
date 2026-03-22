@@ -4,17 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "WeAlwaysSurvive/Structs/EnemyStats.h"
+#include "WeAlwaysSurvive/Objects/StatsObject.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
-class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter
+class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter, public IStatsObject
 {
 	GENERATED_BODY()
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FEnemyStats Stats;
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Level;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int32> AttacksDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxLevel;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int32> AttacksMaxDamage;
 
 public:
 	// Sets default values for this character's properties
@@ -25,6 +40,15 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+	UFUNCTION(BlueprintCallable)
+	virtual int32 GetHealth() const override;
+	
+	UFUNCTION(BlueprintCallable)
+	virtual int32 GetMaxHealth() const override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 GetLvl() const override;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -32,5 +56,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	void Attack(AActor* actor, int32 damage);
+	bool Attack(AActor* actor, int32 damageIndex);
+
+private:
+	UFUNCTION()
+	void TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser);
 };

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "WeAlwaysSurvive/Structs/PlayerStats.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -13,11 +12,35 @@ class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FPlayerStats Stats;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Health;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FPlayerStats StatsMax;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Level;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Stamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Experience;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int32> AttacksDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxLevel;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxStamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxExperience;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int32> AttacksMaxDamage;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
@@ -41,6 +64,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
 	UFUNCTION()
 	void TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser);
 };
