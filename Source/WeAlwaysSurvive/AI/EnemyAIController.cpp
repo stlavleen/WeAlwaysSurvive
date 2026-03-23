@@ -17,11 +17,14 @@ AEnemyAIController::AEnemyAIController() : BehaviorTree(nullptr)
 	senseConfig->DetectionByAffiliation.bDetectEnemies = true;
 	senseConfig->DetectionByAffiliation.bDetectNeutrals = true;
 	senseConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	senseConfig->SetMaxAge(1.f);
 
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception"));
 	PerceptionComponent->ConfigureSense(*senseConfig);
 	PerceptionComponent->SetDominantSense(senseConfig->GetSenseImplementation());
 	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::OnTargetPerceptionUpdate);
+	PerceptionComponent->OnTargetPerceptionForgotten.AddDynamic(this, &AEnemyAIController::OnTargetPerceptionForget);
+
 }
 
 AEnemyCharacter* AEnemyAIController::GetEnemyCharacter() const
@@ -42,10 +45,20 @@ void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus sti
 	const auto senseID = UAISense::GetSenseID<UAISense_Sight>();
 	auto playerCharacter = Cast<APlayerCharacter>(actor);
 
-	if (senseID == stimulus.Type)
+	if (senseID == stimulus.Type && stimulus.WasSuccessfullySensed() && playerCharacter != nullptr)
 	{
 		auto blackboardComp = GetBlackboardComponent();
-		auto value = stimulus.WasSuccessfullySensed() && playerCharacter != nullptr ? playerCharacter : nullptr;
-		blackboardComp->SetValueAsObject(PlayerActorKeyName, value);
+		blackboardComp->SetValueAsObject(PlayerActorKeyName, playerCharacter);
+	}
+}
+
+void AEnemyAIController::OnTargetPerceptionForget(AActor* actor)
+{
+	auto playerCharacter = Cast<APlayerCharacter>(actor);
+	
+	if (playerCharacter != nullptr) 
+	{
+		auto blackboardComp = GetBlackboardComponent();
+		blackboardComp->SetValueAsObject(PlayerActorKeyName, nullptr);
 	}
 }
