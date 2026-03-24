@@ -9,7 +9,20 @@
 UCLASS()
 class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter
 {
-	GENERATED_BODY()
+	GENERATED_BODY(EditAnywhere)
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
+	class USpringArmComponent* CameraBoom;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
+	class UCameraComponent* Camera;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 AttackDistance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 CurrentAttackIndex;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -42,13 +55,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int32> AttacksMaxDamage;
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
-	class USpringArmComponent* CameraBoom;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
-	class UCameraComponent* Camera;
-
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
@@ -56,6 +62,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable)
+	void ApplyAttack();
 
 public:	
 	// Called every frame
