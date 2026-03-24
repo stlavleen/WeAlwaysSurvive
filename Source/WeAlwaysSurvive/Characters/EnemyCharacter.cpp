@@ -60,6 +60,14 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	if (GetIsDead())
+		DamageAmount = 0.0f;
+	 
+	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+}
+
 bool AEnemyCharacter::Attack(AActor* actor, int32 damageIndex)
 {
 	if (!AttacksDamage.IsValidIndex(damageIndex))

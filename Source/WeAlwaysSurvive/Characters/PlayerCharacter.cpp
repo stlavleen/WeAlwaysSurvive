@@ -95,7 +95,7 @@ void APlayerCharacter::ApplyAttack()
 
 	const auto actualDamage = enemyCharacter->TakeDamage(damage, damageEvent, nullptr, nullptr);
 
-	if (actualDamage > 0 && enemyCharacter->GetIsDead())
+	if (actualDamage > 0.0f && enemyCharacter->GetIsDead())
 		Experience += 30; // TODO: move to config
 }
 
