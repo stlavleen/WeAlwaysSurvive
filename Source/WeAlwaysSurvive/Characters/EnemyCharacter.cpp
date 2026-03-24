@@ -41,6 +41,11 @@ int32 AEnemyCharacter::GetLvl() const
 	return Level;
 }
 
+bool AEnemyCharacter::GetIsDead() const
+{
+	return Health <= 0;
+}
+
 // Called every frame
 void AEnemyCharacter::Tick(float DeltaTime)
 {
@@ -69,5 +74,8 @@ bool AEnemyCharacter::Attack(AActor* actor, int32 damageIndex)
 void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser) 
 {
 	Health = FMath::Clamp(Health - StaticCast<int32>(damage), 0, MaxHealth);
+
+	if (GetIsDead())
+		OnDeath.Broadcast();
 }
 

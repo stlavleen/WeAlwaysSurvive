@@ -7,6 +7,7 @@
 #include "WeAlwaysSurvive/Characters/PlayerCharacter.h"
 #include "WeAlwaysSurvive/Characters/EnemyCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "BrainComponent.h"
 
 AEnemyAIController::AEnemyAIController() : BehaviorTree(nullptr)
 {
@@ -24,7 +25,6 @@ AEnemyAIController::AEnemyAIController() : BehaviorTree(nullptr)
 	PerceptionComponent->SetDominantSense(senseConfig->GetSenseImplementation());
 	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::OnTargetPerceptionUpdate);
 	PerceptionComponent->OnTargetPerceptionForgotten.AddDynamic(this, &AEnemyAIController::OnTargetPerceptionForget);
-
 }
 
 AEnemyCharacter* AEnemyAIController::GetEnemyCharacter() const
@@ -38,6 +38,11 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 
 	if (ensureMsgf(BehaviorTree, TEXT("Behavior tree has not been set")))
 		RunBehaviorTree(BehaviorTree);
+
+	auto enemyCharacter = GetEnemyCharacter();
+
+	if (enemyCharacter != nullptr)
+		enemyCharacter->OnDeath.AddDynamic(this, &AEnemyAIController::OnCharacterDeath);
 }
 
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus)
@@ -61,4 +66,10 @@ void AEnemyAIController::OnTargetPerceptionForget(AActor* actor)
 		auto blackboardComp = GetBlackboardComponent();
 		blackboardComp->SetValueAsObject(PlayerActorKeyName, nullptr);
 	}
+}
+
+void AEnemyAIController::OnCharacterDeath()
+{
+	ClearFocus(EAIFocusPriority::Gameplay);
+	CleanupBrainComponent();
 }

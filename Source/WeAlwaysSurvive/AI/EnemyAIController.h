@@ -32,6 +32,9 @@ protected:
 
 	virtual void OnPossess(APawn* InPawn) override;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void OnCharacterDeath();
+
 private:
 	UFUNCTION()
 	void OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus);

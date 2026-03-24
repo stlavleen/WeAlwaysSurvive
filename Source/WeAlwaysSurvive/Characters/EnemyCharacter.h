@@ -7,6 +7,8 @@
 #include "WeAlwaysSurvive/Objects/StatsObject.h"
 #include "EnemyCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathEventSignature);
+
 UCLASS()
 class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter, public IStatsObject
 {
@@ -32,6 +34,11 @@ protected:
 	TArray<int32> AttacksMaxDamage;
 
 public:
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnDeathEventSignature OnDeath;
+
+public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
 
@@ -48,6 +55,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual int32 GetLvl() const override;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsDead() const;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
