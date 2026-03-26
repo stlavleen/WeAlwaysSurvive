@@ -7,7 +7,8 @@
 #include "WeAlwaysSurvive/Objects/StatsObject.h"
 #include "EnemyCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathEventSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTakeDamageSignature, AActor*, damageCauser, int32, damage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathEventSignature, int32, experience);
 
 UCLASS()
 class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter, public IStatsObject
@@ -33,7 +34,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int32> AttacksMaxDamage;
 
+	UPROPERTY(EditAnywhere)
+	int32 OnDefeatExperience = 30;
+
 public:
+	UPROPERTY(BlueprintAssignable)
+	FOnTakeDamageSignature OnTakeDamage;
 	
 	UPROPERTY(BlueprintAssignable)
 	FOnDeathEventSignature OnDeath;

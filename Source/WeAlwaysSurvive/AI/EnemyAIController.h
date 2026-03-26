@@ -33,7 +33,7 @@ protected:
 	virtual void OnPossess(APawn* InPawn) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void OnCharacterDeath();
+	virtual void OnCharacterDeath(int32 experience);
 
 private:
 	UFUNCTION()

@@ -3,6 +3,7 @@
 
 #include "EnemyCharacter.h"
 #include "Engine/DamageEvents.h"
+#include <Kismet/GameplayStatics.h>
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -81,9 +82,12 @@ bool AEnemyCharacter::Attack(AActor* actor, int32 damageIndex)
 
 void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser) 
 {
-	Health = FMath::Clamp(Health - StaticCast<int32>(damage), 0, MaxHealth);
+	const auto iDamage = StaticCast<int32>(damage);
+	Health = FMath::Clamp(Health - iDamage, 0, MaxHealth);
+
+	OnTakeDamage.Broadcast(damageCauser, iDamage);
 
 	if (GetIsDead())
-		OnDeath.Broadcast();
+		OnDeath.Broadcast(OnDefeatExperience);
 }
 

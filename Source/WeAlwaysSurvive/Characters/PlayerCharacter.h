@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "WeAlwaysSurvive/ExperienceReceiver.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
-class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter
+class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter, public IExperienceReceiver
 {
 	GENERATED_BODY(EditAnywhere)
 
@@ -72,6 +73,8 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual void AddExperience(int32 value) override;
 
 private:
 	UFUNCTION()

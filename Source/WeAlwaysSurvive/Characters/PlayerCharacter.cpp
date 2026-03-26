@@ -59,6 +59,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void APlayerCharacter::AddExperience(int32 value)
+{
+	Experience += value;
+}
+
 void APlayerCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
 {
 	Health = FMath::Clamp(Health - StaticCast<int32>(damage), 0, MaxHealth);
@@ -82,9 +87,9 @@ void APlayerCharacter::ApplyAttack()
 	if (!value)
 		return;
 
-	auto enemyCharacter = Cast<AEnemyCharacter>(hitResult.GetActor());
+	auto actor = hitResult.GetActor();
 
-	if (enemyCharacter == nullptr)
+	if (actor == nullptr)
 		return;
 
 	if (!AttacksDamage.IsValidIndex(CurrentAttackIndex))
@@ -93,10 +98,7 @@ void APlayerCharacter::ApplyAttack()
 	auto damage = AttacksDamage[CurrentAttackIndex];
 	FDamageEvent damageEvent{};
 
-	const auto actualDamage = enemyCharacter->TakeDamage(damage, damageEvent, nullptr, nullptr);
-
-	if (actualDamage > 0.0f && enemyCharacter->GetIsDead())
-		Experience += 30; // TODO: move to config
+	actor->TakeDamage(damage, damageEvent, nullptr, this);
 }
 
 
