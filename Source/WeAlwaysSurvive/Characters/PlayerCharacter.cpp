@@ -61,12 +61,25 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::AddExperience(int32 value)
 {
-	Experience += value;
+	const int32 lack = MaxExperience - Experience;
+	const int32 remains = value - lack;
+
+	if (remains > 0) 
+		RaiseTheLevel(remains);
+	else 
+		Experience += value;
 }
 
 void APlayerCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
 {
 	Health = FMath::Clamp(Health - StaticCast<int32>(damage), 0, MaxHealth);
+}
+
+void APlayerCharacter::RaiseTheLevel(int32 experience)
+{
+	Experience = experience;
+	Level++;
+	Health = MaxHealth;
 }
 
 void APlayerCharacter::ApplyAttack()

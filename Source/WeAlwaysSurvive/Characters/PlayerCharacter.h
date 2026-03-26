@@ -79,4 +79,6 @@ public:
 private:
 	UFUNCTION()
 	void TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser);
+
+	void RaiseTheLevel(int32 experience);
 };
