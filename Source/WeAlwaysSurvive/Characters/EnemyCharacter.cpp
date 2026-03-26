@@ -85,9 +85,9 @@ void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const cl
 	const auto iDamage = StaticCast<int32>(damage);
 	Health = FMath::Clamp(Health - iDamage, 0, MaxHealth);
 
-	OnTakeDamage.Broadcast(damageCauser, iDamage);
+	OnTakeDamage.Broadcast(this, damageCauser, iDamage);
 
 	if (GetIsDead())
-		OnDeath.Broadcast(OnDefeatExperience);
+		OnDeath.Broadcast(this, OnDefeatExperience);
 }
 

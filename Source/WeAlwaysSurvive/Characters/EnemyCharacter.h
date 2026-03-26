@@ -7,8 +7,8 @@
 #include "WeAlwaysSurvive/Objects/StatsObject.h"
 #include "EnemyCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTakeDamageSignature, AActor*, damageCauser, int32, damage);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathEventSignature, int32, experience);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnTakeDamageSignature, AActor*, damagedActor,  AActor*, damageCauser, int32, damage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDeathEventSignature, AActor*, sender, int32, experience);
 
 UCLASS()
 class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter, public IStatsObject
