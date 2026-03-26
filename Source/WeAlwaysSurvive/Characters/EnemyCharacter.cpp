@@ -88,6 +88,6 @@ void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const cl
 	OnTakeDamage.Broadcast(this, damageCauser, iDamage);
 
 	if (GetIsDead())
-		OnDeath.Broadcast(this, OnDefeatExperience);
+		OnDeath.Broadcast(this, MaxHealth, OnDefeatExperience);
 }
 

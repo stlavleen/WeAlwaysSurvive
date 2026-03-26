@@ -68,7 +68,7 @@ void AEnemyAIController::OnTargetPerceptionForget(AActor* actor)
 	}
 }
 
-void AEnemyAIController::OnCharacterDeath(AActor* sender, int32 experience)
+void AEnemyAIController::OnCharacterDeath(AActor* sender, float totalHealth, float totalExperience)
 {
 	ClearFocus(EAIFocusPriority::Gameplay);
 	CleanupBrainComponent();

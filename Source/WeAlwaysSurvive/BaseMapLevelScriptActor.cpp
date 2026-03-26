@@ -18,12 +18,12 @@ void ABaseMapLevelScriptActor::UpdateDamagedActors(FString damagedActor, FString
 	}
 }
 
-void ABaseMapLevelScriptActor::HandleDeadActor(FString deadActor, int32 experience)
+void ABaseMapLevelScriptActor::HandleDeadActor(FString deadActor, float totalHealth, float totalExperience)
 {
 	if (!DamagedActors.Contains(deadActor))
 		return;
 
-	SendExperience(DamagedActors[deadActor]->Map, experience);
+	SendExperience(DamagedActors[deadActor]->Map, totalHealth, totalExperience);
 	RemoveDamagedActor(deadActor);
 }
 
@@ -58,7 +58,7 @@ void ABaseMapLevelScriptActor::RemoveDamagedActor(FString damagedActor)
 	}
 }
 
-void ABaseMapLevelScriptActor::SendExperience(TMap<FString, int32> damageCausers, int32 totalExperience)
+void ABaseMapLevelScriptActor::SendExperience(TMap<FString, int32> damageCausers, float totalHealth, float totalExperience)
 {
 	AActor* actor = nullptr;
 
@@ -68,7 +68,6 @@ void ABaseMapLevelScriptActor::SendExperience(TMap<FString, int32> damageCausers
 
 		if (actor != nullptr)
 		{
-			const auto totalHealth = 100.f; // TODO: get from parameter
 			const auto experience = pair.Value / totalHealth * totalExperience;
 			auto receiver = Cast<IExperienceReceiver>(actor);
 
