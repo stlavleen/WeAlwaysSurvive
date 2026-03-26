@@ -14,6 +14,9 @@
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
+	CurrentAttackIndex = -1;
+	AttackDistance = 0;
+
 	Health = 100;
 	Stamina = 100;
 	Experience = 0;
@@ -59,10 +62,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void APlayerCharacter::AddExperience(int32 value)
+void APlayerCharacter::AddExperience(float value)
 {
-	const int32 lack = MaxExperience - Experience;
-	const int32 remains = value - lack;
+	const float lack = MaxExperience - Experience;
+	const float remains = value - lack;
 
 	if (remains > 0) 
 		RaiseTheLevel(remains);
@@ -72,10 +75,10 @@ void APlayerCharacter::AddExperience(int32 value)
 
 void APlayerCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
 {
-	Health = FMath::Clamp(Health - StaticCast<int32>(damage), 0, MaxHealth);
+	Health = FMath::Clamp(Health - damage, 0, MaxHealth);
 }
 
-void APlayerCharacter::RaiseTheLevel(int32 experience)
+void APlayerCharacter::RaiseTheLevel(float experience)
 {
 	Experience = experience;
 	Level++;

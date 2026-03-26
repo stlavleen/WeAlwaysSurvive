@@ -23,5 +23,5 @@ class WEALWAYSSURVIVE_API IExperienceReceiver
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION()
-	virtual void AddExperience(int32 value) = 0;
+	virtual void AddExperience(float value) = 0;
 };

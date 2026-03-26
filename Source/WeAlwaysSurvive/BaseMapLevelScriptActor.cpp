@@ -5,7 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "ExperienceReceiver.h"
 
-void ABaseMapLevelScriptActor::UpdateDamagedActors(FString damagedActor, FString damageCauser, int32 damage)
+void ABaseMapLevelScriptActor::UpdateDamagedActors(FString damagedActor, FString damageCauser, float damage)
 {
 	if (DamagedActors.Contains(damagedActor)) 
 	{
@@ -27,15 +27,15 @@ void ABaseMapLevelScriptActor::HandleDeadActor(FString deadActor, float totalHea
 	RemoveDamagedActor(deadActor);
 }
 
-UStringIntMapContainer* ABaseMapLevelScriptActor::CreateDamageCausers(FString damageCauser, int32 damage)
+UStringFloatMapContainer* ABaseMapLevelScriptActor::CreateDamageCausers(FString damageCauser, float damage)
 {
-	auto damageCausers = NewObject<UStringIntMapContainer>();
+	auto damageCausers = NewObject<UStringFloatMapContainer>();
 	damageCausers->Map.Add(damageCauser, damage);
 
 	return damageCausers;
 }
 
-void ABaseMapLevelScriptActor::UpdateDamageCausers(TMap<FString, int32>& damageCausers, FString damageCauser, int32 damage)
+void ABaseMapLevelScriptActor::UpdateDamageCausers(TMap<FString, float>& damageCausers, FString damageCauser, float damage)
 {
 	auto existedDamageCauser = damageCausers.Find(damageCauser);
 
@@ -58,7 +58,7 @@ void ABaseMapLevelScriptActor::RemoveDamagedActor(FString damagedActor)
 	}
 }
 
-void ABaseMapLevelScriptActor::SendExperience(TMap<FString, int32> damageCausers, float totalHealth, float totalExperience)
+void ABaseMapLevelScriptActor::SendExperience(TMap<FString, float> damageCausers, float totalHealth, float totalExperience)
 {
 	AActor* actor = nullptr;
 

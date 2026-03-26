@@ -27,12 +27,12 @@ void AEnemyCharacter::BeginPlay()
 	
 }
 
-int32 AEnemyCharacter::GetHealth() const
+float AEnemyCharacter::GetHealth() const
 {
 	return Health;
 }
 
-int32 AEnemyCharacter::GetMaxHealth() const
+float AEnemyCharacter::GetMaxHealth() const
 {
 	return MaxHealth;
 }
@@ -82,10 +82,9 @@ bool AEnemyCharacter::Attack(AActor* actor, int32 damageIndex)
 
 void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser) 
 {
-	const auto iDamage = StaticCast<int32>(damage);
-	Health = FMath::Clamp(Health - iDamage, 0, MaxHealth);
+	Health = FMath::Clamp(Health - damage, 0, MaxHealth);
 
-	OnTakeDamage.Broadcast(this, damageCauser, iDamage);
+	OnTakeDamage.Broadcast(this, damageCauser, damage);
 
 	if (GetIsDead())
 		OnDeath.Broadcast(this, MaxHealth, OnDefeatExperience);

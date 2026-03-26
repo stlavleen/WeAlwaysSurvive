@@ -23,10 +23,10 @@ class WEALWAYSSURVIVE_API IStatsObject
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable)
-	virtual int32 GetHealth() const = 0;
+	virtual float GetHealth() const = 0;
 
 	UFUNCTION(BlueprintCallable)
-	virtual int32 GetMaxHealth() const = 0;
+	virtual float GetMaxHealth() const = 0;
 
 	UFUNCTION(BlueprintCallable)
 	virtual int32 GetLvl() const = 0;

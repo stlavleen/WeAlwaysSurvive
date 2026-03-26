@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "StringIntMapContainer.generated.h"
+#include "StringFloatMapContainer.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class WEALWAYSSURVIVE_API UStringIntMapContainer : public UObject
+class WEALWAYSSURVIVE_API UStringFloatMapContainer : public UObject
 {
 	GENERATED_BODY()
 	
 public:
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, int32> Map;
+	TMap<FString, float> Map;
 };

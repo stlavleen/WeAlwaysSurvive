@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/LevelScriptActor.h"
-#include "Data/StringIntMapContainer.h"
+#include "Data/StringFloatMapContainer.h"
 #include "BaseMapLevelScriptActor.generated.h"
 
 /**
@@ -17,19 +17,19 @@ class WEALWAYSSURVIVE_API ABaseMapLevelScriptActor : public ALevelScriptActor
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
-	TMap<FString, UStringIntMapContainer*> DamagedActors;
+	TMap<FString, UStringFloatMapContainer*> DamagedActors;
 
 protected:
 	UFUNCTION(BlueprintCallable)
-	void UpdateDamagedActors(FString damagedActor, FString damageCauser, int32 damage);
+	void UpdateDamagedActors(FString damagedActor, FString damageCauser, float damage);
 
 	UFUNCTION(BlueprintCallable)
 	void HandleDeadActor(FString deadActor, float totalHealth, float totalExperience);
 
 private:
-	UStringIntMapContainer* CreateDamageCausers(FString damageCauser, int32 damage);
-	void UpdateDamageCausers(TMap<FString, int32>& damageCausers, FString damageCauser, int32 damage);
+	UStringFloatMapContainer* CreateDamageCausers(FString damageCauser, float damage);
+	void UpdateDamageCausers(TMap<FString, float>& damageCausers, FString damageCauser, float damage);
 	void RemoveDamagedActor(FString damagedActor);
-	void SendExperience(TMap<FString, int32> damageCausers, float totalHealth, float totalExperience);
+	void SendExperience(TMap<FString, float> damageCausers, float totalHealth, float totalExperience);
 	AActor* FindExperienceReceiverByName(const FString& actorName);
 };

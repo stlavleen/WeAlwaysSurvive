@@ -7,7 +7,7 @@
 #include "WeAlwaysSurvive/Objects/StatsObject.h"
 #include "EnemyCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnTakeDamageSignature, AActor*, damagedActor,  AActor*, damageCauser, int32, damage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnTakeDamageSignature, AActor*, damagedActor,  AActor*, damageCauser, float, damage);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnDeathEventSignature, AActor*, sender, float, totalHealth, float, totalExperience);
 
 UCLASS()
@@ -17,25 +17,25 @@ class WEALWAYSSURVIVE_API AEnemyCharacter : public ACharacter, public IStatsObje
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Health;
+	float Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Level;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int32> AttacksDamage;
+	TArray<float> AttacksDamage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxHealth;
+	float MaxHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MaxLevel;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int32> AttacksMaxDamage;
+	TArray<float> AttacksMaxDamage;
 
 	UPROPERTY(EditAnywhere)
-	int32 OnDefeatExperience = 30;
+	float OnDefeatExperience = 30;
 
 public:
 	UPROPERTY(BlueprintAssignable)
@@ -54,10 +54,10 @@ protected:
 
 public:	
 	UFUNCTION(BlueprintCallable)
-	virtual int32 GetHealth() const override;
+	virtual float GetHealth() const override;
 	
 	UFUNCTION(BlueprintCallable)
-	virtual int32 GetMaxHealth() const override;
+	virtual float GetMaxHealth() const override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual int32 GetLvl() const override;

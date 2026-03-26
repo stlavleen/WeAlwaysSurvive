@@ -20,41 +20,41 @@ protected:
 	class UCameraComponent* Camera;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 AttackDistance;
+	float AttackDistance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 CurrentAttackIndex;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Health;
+	float Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Level;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Stamina;
+	float Stamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Experience;
+	float Experience;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int32> AttacksDamage;
+	TArray<float> AttacksDamage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxHealth;
+	float MaxHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MaxLevel;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxStamina;
+	float MaxStamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxExperience;
+	float MaxExperience;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int32> AttacksMaxDamage;
+	TArray<float> AttacksMaxDamage;
 
 public:
 	// Sets default values for this character's properties
@@ -74,11 +74,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual void AddExperience(int32 value) override;
+	virtual void AddExperience(float value) override;
 
 private:
 	UFUNCTION()
 	void TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser);
 
-	void RaiseTheLevel(int32 experience);
+	void RaiseTheLevel(float experience);
 };
