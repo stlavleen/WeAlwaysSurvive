@@ -21,7 +21,7 @@ public:
 	AEnemyAIController();
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE AEnemyCharacter* GetEnemyCharacter() const;
+	AEnemyCharacter* GetEnemyCharacter() const;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enemy AI")
