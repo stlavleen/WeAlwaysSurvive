@@ -18,7 +18,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<FString> GetFilesNames(const FString folderName) const;
 
-//private:
 	UFUNCTION(BlueprintCallable)
 	FString GetGamePath() const;
 };
