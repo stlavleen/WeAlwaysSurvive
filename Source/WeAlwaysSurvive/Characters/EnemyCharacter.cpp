@@ -93,15 +93,8 @@ void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const cl
 
 void AEnemyCharacter::SetDead()
 {
-	/*auto skeletalMesh = GetMesh();
-	skeletalMesh->SetSimulatePhysics(true);
-	skeletalMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	skeletalMesh->SetCollisionObjectType(ECollisionChannel::ECC_PhysicsBody);*/
-
-	/*auto capsule = GetCapsuleComponent();
-	capsule->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
-	capsule->SetSimulatePhysics(true);
-	capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	capsule->SetCollisionObjectType(ECollisionChannel::ECC_PhysicsBody);*/
+	auto capsule = GetCapsuleComponent();
+	capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	SetLifeSpan(5.f);
 }
 
