@@ -94,7 +94,7 @@ void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const cl
 void AEnemyCharacter::SetDead()
 {
 	auto capsule = GetCapsuleComponent();
-	capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	capsule->SetCollisionProfileName(FName(TEXT("NoCollision")));
 	SetLifeSpan(5.f);
 }
 
