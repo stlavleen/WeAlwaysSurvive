@@ -3,7 +3,8 @@
 
 #include "EnemyCharacter.h"
 #include "Engine/DamageEvents.h"
-#include <Kismet/GameplayStatics.h>
+#include "Kismet/GameplayStatics.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -86,7 +87,18 @@ void AEnemyCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const cl
 
 	OnTakeDamage.Broadcast(this, damageCauser, damage);
 
-	if (GetIsDead())
+	if (GetIsDead()) 
 		OnDeath.Broadcast(this, MaxHealth, OnDefeatExperience);
+}
+
+void AEnemyCharacter::SetDead()
+{
+	auto skeletalMesh = GetMesh();
+	skeletalMesh->SetSimulatePhysics(true);
+	skeletalMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	skeletalMesh->SetCollisionObjectType(ECollisionChannel::ECC_PhysicsBody);
+
+	auto capsule = GetCapsuleComponent();
+	capsule->bHiddenInGame = true;
 }
 

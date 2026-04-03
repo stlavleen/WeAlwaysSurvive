@@ -76,6 +76,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool Attack(AActor* actor, int32 damageIndex);
 
+	UFUNCTION(BlueprintCallable)
+	void SetDead();
+
 private:
 	UFUNCTION()
 	void TakeAnyDamage(AActor* damagedActor, float damage, const class UDamageType* damageType, class AController* instigatedBy, AActor* damageCauser);
