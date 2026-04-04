@@ -14,6 +14,7 @@ class WEALWAYSSURVIVE_API AEnemiesSpawnArea : public AActor
 private:
 	int32 EnemiesCount;
 	FTimerHandle TimerHandle;
+	class UActorDamageHandler* DamageHandler;
 
 public:
 	UPROPERTY(EditAnywhere)
@@ -48,6 +49,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void DecreaseEnemiesCount();
+
+	UFUNCTION(BlueprintCallable)
+	UActorDamageHandler* GetDamageHandler() const;
 
 private:
 	void StartSpawn();

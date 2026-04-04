@@ -5,6 +5,7 @@
 #include "WeAlwaysSurvive/Characters/EnemyCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "WeAlwaysSurvive/Handlers/ActorDamageHandler.h"
 
 // Sets default values
 AEnemiesSpawnArea::AEnemiesSpawnArea()
@@ -17,13 +18,14 @@ AEnemiesSpawnArea::AEnemiesSpawnArea()
 	EnemiesCount = 0;
 	EnemiesMaxCount = 10;
 	Rate = 2.f;
+	DamageHandler = NewObject<UActorDamageHandler>();
 }
 
 // Called when the game starts or when spawned
 void AEnemiesSpawnArea::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	StartSpawn();
 }
 
 // Called every frame
@@ -36,6 +38,11 @@ void AEnemiesSpawnArea::Tick(float DeltaTime)
 void AEnemiesSpawnArea::DecreaseEnemiesCount()
 {
 	EnemiesCount--;
+}
+
+UActorDamageHandler* AEnemiesSpawnArea::GetDamageHandler() const
+{
+	return DamageHandler;
 }
 
 void AEnemiesSpawnArea::StartSpawn()
