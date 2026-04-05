@@ -68,7 +68,7 @@ void AEnemiesSpawnArea::SpawnEnemy()
 	const auto originalExtent = Box->Bounds.BoxExtent;
 	const auto extent = FVector(originalExtent.X, originalExtent.Y, 0);
 	const auto location = UKismetMathLibrary::RandomPointInBoundingBox(origin, extent);
-	const auto rotation = FRotator(0.f, 0.f, FMath::RandRange(0.f, 360.f));
+	const auto rotation = FRotator(0.f, FMath::RandRange(0.f, 360.f), 0.f);
 
 	auto enemy = GetWorld()->SpawnActor<AEnemyCharacter>(*EnemyClass, location, rotation);
 
@@ -77,6 +77,12 @@ void AEnemiesSpawnArea::SpawnEnemy()
 		StopSpawn();
 		return;
 	}
+
+	enemy->SpawnDefaultController();
+
+	const auto isEmpty = enemy->GetMesh()->GetAnimInstance() == nullptr ? TEXT("true") : TEXT("false");
+
+	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, FString::Printf(TEXT("enemy anim instance is null? %s"), isEmpty));
 
 	enemy->OnTakeDamage.AddDynamic(this, &AEnemiesSpawnArea::OnSpawnedEnemyTakeDamage);
 	enemy->OnDeath.AddDynamic(this, &AEnemiesSpawnArea::OnSpawnedEnemyDead);
