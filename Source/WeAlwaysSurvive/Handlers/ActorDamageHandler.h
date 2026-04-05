@@ -10,13 +10,13 @@
 /**
  * 
  */
-UCLASS(BlueprintType)
+UCLASS()
 class WEALWAYSSURVIVE_API UActorDamageHandler : public UObject
 {
 	GENERATED_BODY()
 	
-public:
-	UPROPERTY(BlueprintReadOnly)
+private:
+	UPROPERTY()
 	TMap<FString, UStringFloatMapContainer*> DamagedActors;
 
 public:

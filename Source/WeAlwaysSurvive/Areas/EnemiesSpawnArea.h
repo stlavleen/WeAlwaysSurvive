@@ -12,13 +12,17 @@ class WEALWAYSSURVIVE_API AEnemiesSpawnArea : public AActor
 	GENERATED_BODY()
 
 private:
-	int32 EnemiesCount;
+	int32 EnemiesCount = 0;
+
+	UPROPERTY()
 	FTimerHandle TimerHandle;
+
+	UPROPERTY()
 	class UActorDamageHandler* DamageHandler;
 
 public:
 	UPROPERTY(EditAnywhere)
-	int32 EnemiesMaxCount;
+	int32 EnemiesMaxCount = 10;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AEnemyCharacter> EnemyClass;
@@ -27,7 +31,7 @@ public:
 	class UBoxComponent* Box;
 
 	UPROPERTY(EditAnywhere)
-	float Rate;
+	float Rate = 2.f;
 	
 public:	
 	// Sets default values for this actor's properties
@@ -41,20 +45,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnSpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnSpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience);
-
-	UFUNCTION(BlueprintCallable)
-	void DecreaseEnemiesCount();
-
-	UFUNCTION(BlueprintCallable)
-	UActorDamageHandler* GetDamageHandler() const;
-
 private:
 	void StartSpawn();
 	void StopSpawn();
 	void SpawnEnemy();
+	void OnSpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage);
+	void OnSpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience);
 };

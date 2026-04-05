@@ -5,19 +5,18 @@
 #include "WeAlwaysSurvive/Characters/EnemyCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "WeAlwaysSurvive/Handlers/ActorDamageHandler.h"
 
 // Sets default values
 AEnemiesSpawnArea::AEnemiesSpawnArea()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Box->SetupAttachment(RootComponent);
-	EnemiesCount = 0;
-	EnemiesMaxCount = 10;
-	Rate = 2.f;
+
 	DamageHandler = NewObject<UActorDamageHandler>();
 }
 
@@ -25,6 +24,7 @@ AEnemiesSpawnArea::AEnemiesSpawnArea()
 void AEnemiesSpawnArea::BeginPlay()
 {
 	Super::BeginPlay();
+
 	StartSpawn();
 }
 
@@ -32,17 +32,20 @@ void AEnemiesSpawnArea::BeginPlay()
 void AEnemiesSpawnArea::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
-void AEnemiesSpawnArea::DecreaseEnemiesCount()
+void AEnemiesSpawnArea::OnSpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage)
 {
+	const auto damagedActorName = UKismetSystemLibrary::GetObjectName(damagedActor);
+	const auto damageCauserName = UKismetSystemLibrary::GetObjectName(damageCauser);
+	DamageHandler->UpdateDamagedActors(damagedActorName, damageCauserName, damage);
+}
+
+void AEnemiesSpawnArea::OnSpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience)
+{
+	const auto senderName = UKismetSystemLibrary::GetObjectName(sender);
+	DamageHandler->HandleDeadActor(senderName, totalHealth, totalExperience);
 	EnemiesCount--;
-}
-
-UActorDamageHandler* AEnemiesSpawnArea::GetDamageHandler() const
-{
-	return DamageHandler;
 }
 
 void AEnemiesSpawnArea::StartSpawn()
@@ -58,11 +61,11 @@ void AEnemiesSpawnArea::StopSpawn()
 
 void AEnemiesSpawnArea::SpawnEnemy()
 {
-	if (EnemiesCount >= EnemiesMaxCount)
+	if (EnemiesCount >= EnemiesMaxCount) 
 	{
 		StopSpawn();
 		return;
-	}
+	}	
 
 	const auto origin = Box->Bounds.Origin;
 	const auto originalExtent = Box->Bounds.BoxExtent;
@@ -73,19 +76,11 @@ void AEnemiesSpawnArea::SpawnEnemy()
 	auto enemy = GetWorld()->SpawnActor<AEnemyCharacter>(*EnemyClass, location, rotation);
 
 	if (enemy == nullptr)
-	{
-		StopSpawn();
 		return;
-	}
-
-	enemy->SpawnDefaultController();
-
-	const auto isEmpty = enemy->GetMesh()->GetAnimInstance() == nullptr ? TEXT("true") : TEXT("false");
-
-	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, FString::Printf(TEXT("enemy anim instance is null? %s"), isEmpty));
 
 	enemy->OnTakeDamage.AddDynamic(this, &AEnemiesSpawnArea::OnSpawnedEnemyTakeDamage);
 	enemy->OnDeath.AddDynamic(this, &AEnemiesSpawnArea::OnSpawnedEnemyDead);
+	enemy->SpawnDefaultController();
 
 	EnemiesCount++;
 }
