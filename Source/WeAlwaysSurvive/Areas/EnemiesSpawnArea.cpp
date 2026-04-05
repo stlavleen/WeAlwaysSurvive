@@ -15,6 +15,7 @@ AEnemiesSpawnArea::AEnemiesSpawnArea() : DamageHandler(nullptr)
 	PrimaryActorTick.bCanEverTick = false;
 
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
+	Box->SetCollisionProfileName(FName(TEXT("NoCollision")));
 	Box->SetupAttachment(RootComponent);
 }
 
