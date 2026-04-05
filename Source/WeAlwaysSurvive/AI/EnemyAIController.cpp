@@ -45,6 +45,13 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 		enemyCharacter->OnDeath.AddDynamic(this, &AEnemyAIController::OnCharacterDeath);
 }
 
+void AEnemyAIController::OnUnPossess()
+{
+	BrainComponent->StopLogic("OnUnPossess");
+
+	Super::OnUnPossess();
+}
+
 void AEnemyAIController::OnTargetPerceptionUpdate(AActor* actor, FAIStimulus stimulus)
 {
 	const auto senseID = UAISense::GetSenseID<UAISense_Sight>();

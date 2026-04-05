@@ -32,6 +32,8 @@ protected:
 
 	virtual void OnPossess(APawn* InPawn) override;
 
+	virtual void OnUnPossess() override;
+
 	UFUNCTION(BlueprintCallable)
 	virtual void OnCharacterDeath(AActor* sender, float totalHealth, float totalExperience);
 
