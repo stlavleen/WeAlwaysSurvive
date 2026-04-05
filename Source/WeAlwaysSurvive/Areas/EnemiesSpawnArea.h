@@ -49,6 +49,10 @@ private:
 	void StartSpawn();
 	void StopSpawn();
 	void SpawnEnemy();
+
+	UFUNCTION()
 	void OnSpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage);
+
+	UFUNCTION()
 	void OnSpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience);
 };

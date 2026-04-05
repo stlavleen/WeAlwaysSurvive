@@ -16,14 +16,14 @@ AEnemiesSpawnArea::AEnemiesSpawnArea()
 
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Box->SetupAttachment(RootComponent);
-
-	DamageHandler = NewObject<UActorDamageHandler>();
 }
 
 // Called when the game starts or when spawned
 void AEnemiesSpawnArea::BeginPlay()
 {
 	Super::BeginPlay();
+
+	DamageHandler = NewObject<UActorDamageHandler>();
 
 	StartSpawn();
 }
