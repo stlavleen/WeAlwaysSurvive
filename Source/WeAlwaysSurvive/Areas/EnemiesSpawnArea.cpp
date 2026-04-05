@@ -9,7 +9,7 @@
 #include "WeAlwaysSurvive/Handlers/ActorDamageHandler.h"
 
 // Sets default values
-AEnemiesSpawnArea::AEnemiesSpawnArea()
+AEnemiesSpawnArea::AEnemiesSpawnArea() : DamageHandler(nullptr)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
@@ -23,7 +23,7 @@ void AEnemiesSpawnArea::BeginPlay()
 {
 	Super::BeginPlay();
 
-	DamageHandler = NewObject<UActorDamageHandler>();
+	DamageHandler = NewObject<UActorDamageHandler>(this);
 
 	StartSpawn();
 }
