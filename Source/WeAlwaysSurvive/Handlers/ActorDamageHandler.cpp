@@ -79,7 +79,8 @@ void UActorDamageHandler::SendExperience(TMap<FString, float> damageCausers, flo
 AActor* UActorDamageHandler::FindExperienceReceiverByName(const FString& actorName)
 {
 	TArray<AActor*> actors;
-	UGameplayStatics::GetAllActorsWithInterface(GetWorld(), UExperienceReceiver::StaticClass(), actors);
+	auto world = GetWorld();
+	UGameplayStatics::GetAllActorsWithInterface(world, UExperienceReceiver::StaticClass(), actors);
 
 	auto actor = actors.FindByPredicate([actorName](AActor* x) { return x->GetName().Equals(actorName); });
 
