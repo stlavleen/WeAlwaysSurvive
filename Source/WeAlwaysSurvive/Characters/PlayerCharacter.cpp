@@ -76,6 +76,9 @@ void APlayerCharacter::AddExperience(float value)
 void APlayerCharacter::TakeAnyDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
 {
 	Health = FMath::Clamp(Health - damage, 0, MaxHealth);
+
+	if (GetIsDead())
+		OnDeath.Broadcast();
 }
 
 void APlayerCharacter::RaiseTheLevel(float experience)
@@ -83,6 +86,11 @@ void APlayerCharacter::RaiseTheLevel(float experience)
 	Experience = experience;
 	Level++;
 	Health = MaxHealth;
+}
+
+bool APlayerCharacter::GetIsDead() const
+{
+	return Health <= 0;
 }
 
 void APlayerCharacter::ApplyAttack()

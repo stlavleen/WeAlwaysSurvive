@@ -7,6 +7,8 @@
 #include "WeAlwaysSurvive/ExperienceReceiver.h"
 #include "PlayerCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDeathEventSignature);
+
 UCLASS()
 class WEALWAYSSURVIVE_API APlayerCharacter : public ACharacter, public IExperienceReceiver
 {
@@ -56,6 +58,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<float> AttacksMaxDamage;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnPlayerDeathEventSignature OnDeath;
+
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
@@ -75,6 +80,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void AddExperience(float value) override;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsDead() const;
 
 private:
 	UFUNCTION()
