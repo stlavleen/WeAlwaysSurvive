@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "WeAlwaysSurvive/Characters/EnemyCharacter.h"
 #include "EnemiesSpawnArea.generated.h"
 
 UCLASS()
@@ -12,7 +13,7 @@ class WEALWAYSSURVIVE_API AEnemiesSpawnArea : public AActor
 	GENERATED_BODY()
 
 private:
-	int32 EnemiesCount = 0;
+	int32 LiveEnemiesCount = 0;
 
 	UPROPERTY()
 	FTimerHandle TimerHandle;
@@ -32,7 +33,10 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float Rate = 2.f;
-	
+
+	UPROPERTY(BlueprintAssignable)
+	FOnDeathEventSignature OnSpawnedEnemyDeath;
+
 public:	
 	// Sets default values for this actor's properties
 	AEnemiesSpawnArea();
@@ -51,8 +55,8 @@ private:
 	void SpawnEnemy();
 
 	UFUNCTION()
-	void OnSpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage);
+	void SpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage);
 
 	UFUNCTION()
-	void OnSpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience);
+	void SpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience);
 };

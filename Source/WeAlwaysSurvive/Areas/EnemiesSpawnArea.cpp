@@ -2,7 +2,6 @@
 
 
 #include "EnemiesSpawnArea.h"
-#include "WeAlwaysSurvive/Characters/EnemyCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -35,18 +34,19 @@ void AEnemiesSpawnArea::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AEnemiesSpawnArea::OnSpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage)
+void AEnemiesSpawnArea::SpawnedEnemyTakeDamage(AActor* damagedActor, AActor* damageCauser, float damage)
 {
 	const auto damagedActorName = UKismetSystemLibrary::GetObjectName(damagedActor);
 	const auto damageCauserName = UKismetSystemLibrary::GetObjectName(damageCauser);
 	DamageHandler->UpdateDamagedActors(damagedActorName, damageCauserName, damage);
 }
 
-void AEnemiesSpawnArea::OnSpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience)
+void AEnemiesSpawnArea::SpawnedEnemyDead(AActor* sender, float totalHealth, float totalExperience)
 {
 	const auto senderName = UKismetSystemLibrary::GetObjectName(sender);
 	DamageHandler->HandleDeadActor(senderName, totalHealth, totalExperience);
-	EnemiesCount--;
+	LiveEnemiesCount--;
+	OnSpawnedEnemyDeath.Broadcast(sender, totalHealth, totalExperience);
 }
 
 void AEnemiesSpawnArea::StartSpawn()
@@ -62,7 +62,7 @@ void AEnemiesSpawnArea::StopSpawn()
 
 void AEnemiesSpawnArea::SpawnEnemy()
 {
-	if (EnemiesCount >= EnemiesMaxCount) 
+	if (LiveEnemiesCount >= EnemiesMaxCount) 
 	{
 		StopSpawn();
 		return;
@@ -79,10 +79,10 @@ void AEnemiesSpawnArea::SpawnEnemy()
 	if (enemy == nullptr)
 		return;
 
-	enemy->OnTakeDamage.AddDynamic(this, &AEnemiesSpawnArea::OnSpawnedEnemyTakeDamage);
-	enemy->OnDeath.AddDynamic(this, &AEnemiesSpawnArea::OnSpawnedEnemyDead);
+	enemy->OnTakeDamage.AddDynamic(this, &AEnemiesSpawnArea::SpawnedEnemyTakeDamage);
+	enemy->OnDeath.AddDynamic(this, &AEnemiesSpawnArea::SpawnedEnemyDead);
 	enemy->SpawnDefaultController();
 
-	EnemiesCount++;
+	LiveEnemiesCount++;
 }
 
