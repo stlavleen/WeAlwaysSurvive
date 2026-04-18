@@ -23,4 +23,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	UGameSettings* GetSettings() const;
+
+private:
+	UFUNCTION()
+	void BeginLoadingScreen(const FString& mapName);
 };
